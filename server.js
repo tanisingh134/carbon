@@ -14,7 +14,10 @@ app.use(cors({
 app.use(express.json());
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGO_URI);
+mongoose.connect('mongodb://localhost/carbon_tracker', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 
 // Schemas
@@ -204,5 +207,6 @@ app.get('/', (req, res) => {
 // 🔊 Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
 
 
