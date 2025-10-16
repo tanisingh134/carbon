@@ -7,14 +7,15 @@ const path = require('path');
 const axios = require('axios');
 const app = express();
 
-app.use(cors({ origin: 'http://localhost:3000' })); // Adjust origin for production
+app.use(cors({
+  origin: ['https://your-frontend.onrender.com', 'http://localhost:3000']
+}));
+ // Adjust origin for production
 app.use(express.json());
 
 // MongoDB Connection
-mongoose.connect('mongodb://localhost/carbon_tracker', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGO_URI);
+
 
 // Schemas
 const UserSchema = new mongoose.Schema({
@@ -201,4 +202,7 @@ app.get('/', (req, res) => {
 });
 
 // 🔊 Start server
-app.listen(3000, () => console.log('🚀 Server running on http://localhost:3000'));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
+
