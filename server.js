@@ -25,10 +25,12 @@ if (isProduction) {
 // ... other app.use(express.json())
 
 // MongoDB Connection
-mongoose.connect('mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGODB_URI, { 
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+.then(() => console.log('MongoDB Connected Successfully'))
+.catch(err => console.error('MongoDB Connection Error:', err));
 
 
 // Schemas
@@ -218,6 +220,7 @@ app.get('/', (req, res) => {
 // 🔊 Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
 
 
 
