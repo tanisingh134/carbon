@@ -12,6 +12,7 @@ const allowedOrigin = isProduction ? 'https://carbon-8lqm.onrender.com' : 'http:
 app.use(cors({
 origin: allowedOrigin,
 credentials: true,
+}));
  // Adjust origin for production
 app.use(express.json());
 
@@ -218,6 +219,7 @@ app.get('/', (req, res) => {
 // 🔊 Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
 
 
 
