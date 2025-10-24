@@ -7,14 +7,25 @@ const path = require('path');
 const axios = require('axios');
 const app = express();
 
+const isProduction = process.env.NODE_ENV === 'production';
+const allowedOrigin = isProduction ? 'https://carbon-8lqm.onrender.com' : 'http://localhost:3000';
 app.use(cors({
-  origin: ['https://your-frontend.onrender.com', 'http://localhost:3000']
-}));
+origin: allowedOrigin,
+credentials: true,
  // Adjust origin for production
 app.use(express.json());
 
+const isProduction = process.env.NODE_ENV === 'production';
+
+
+if (isProduction) {
+    app.set('trust proxy', 1); // 🚨 CRITICAL ADDITION
+}
+
+// ... other app.use(express.json())
+
 // MongoDB Connection
-mongoose.connect('mongodb://localhost/carbon_tracker', {
+mongoose.connect('mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -207,6 +218,7 @@ app.get('/', (req, res) => {
 // 🔊 Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
 
 
 
